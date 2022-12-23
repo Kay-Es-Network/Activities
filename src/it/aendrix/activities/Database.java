@@ -59,10 +59,6 @@ public class Database {
         this.updateSet.setString(2, name);
         this.updateSet.setString(3, date);
 
-        this.updateSet.setInt(1, time);
-        this.updateSet.setString(2, name);
-        this.updateSet.setString(3, date);
-
         this.updateSet.executeUpdate();
     }
 
