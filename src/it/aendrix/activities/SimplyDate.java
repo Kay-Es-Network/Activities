@@ -32,6 +32,14 @@ public class SimplyDate {
         this.year = calendar.get(Calendar.YEAR);
     }
 
+    public SimplyDate(String date) {
+        String[] str = date.split("/");
+
+        this.day = Integer.parseInt(str[0]);
+        this.month = Integer.parseInt(str[1]);
+        this.year = Integer.parseInt(str[2]);
+    }
+
     public SimplyDate() {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
 
@@ -86,7 +94,16 @@ public class SimplyDate {
         return this.day == date.getDay() && this.month == date.getMonth() && this.year == date.getYear();
     }
 
+    @Override
+    public String toString() {
+        return this.day+"/"+this.month+"/"+this.year;
+    }
+
     public static SimplyDate getInstance() {
+        return new SimplyDate();
+    }
+
+    public static SimplyDate today() {
         return new SimplyDate();
     }
 }
