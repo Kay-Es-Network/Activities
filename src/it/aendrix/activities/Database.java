@@ -85,7 +85,7 @@ public class Database {
         HashMap<String , PlayerInstance> data = new HashMap<>();
 
         Statement sql = this.connection.createStatement();
-        ResultSet set = sql.executeQuery("SELECT DISTINCT * FROM "+this.table+" WHERE Date = "+SimplyDate.getInstance());
+        ResultSet set = sql.executeQuery("SELECT DISTINCT * FROM "+this.table+" WHERE Data = "+SimplyDate.getInstance());
 
         while (set.next())
             data.put(set.getString("Name"), new PlayerInstance(set.getString("Name"), new SimplyDate(set.getString("Data")), set.getInt("Time"), false));
