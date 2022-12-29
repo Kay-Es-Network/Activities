@@ -28,7 +28,7 @@ public class Database {
 
         this.selectCond = this.connection.prepareStatement("SELECT * FROM "+this.table+" WHERE Name = ? AND Data = ?");
         this.updateSet = this.connection.prepareStatement("UPDATE "+this.table+" SET Time = ? WHERE Name = ? AND Data = ?");
-        this.insert = this.connection.prepareStatement("INSERT INTO "+this.table+" ('Name','Data',Time) VALUES ('?','?',?)");
+        this.insert = this.connection.prepareStatement("INSERT INTO "+this.table+" (Name,Data,Time) VALUES (?,?,?)");
     }
 
     public void openConnection() throws SQLException, ClassNotFoundException {
@@ -46,7 +46,6 @@ public class Database {
         }
     }
 
-    // DATA__,Name__,time(min)
     public ResultSet select(String name, String date) throws SQLException {
         this.selectCond.setString(1, name);
         this.selectCond.setString(2, date);
@@ -84,8 +83,10 @@ public class Database {
     public HashMap<String , PlayerInstance> selectAllToday() throws SQLException {
         HashMap<String , PlayerInstance> data = new HashMap<>();
 
+        String now = SimplyDate.getInstance().toString();
+
         Statement sql = this.connection.createStatement();
-        ResultSet set = sql.executeQuery("SELECT DISTINCT * FROM "+this.table+" WHERE Data = "+SimplyDate.getInstance());
+        ResultSet set = sql.executeQuery("SELECT * FROM "+this.table+" WHERE Data = '"+now+"'");
 
         while (set.next())
             data.put(set.getString("Name"), new PlayerInstance(set.getString("Name"), new SimplyDate(set.getString("Data")), set.getInt("Time"), false));

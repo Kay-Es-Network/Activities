@@ -11,7 +11,7 @@ public class Listener implements org.bukkit.event.Listener {
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
 
-        if (!p.hasPermission("countactivities"))
+        if (!p.hasPermission("countactivities") && !p.hasPermission("*"))
             return;
 
         PlayerInstance instance = Main.getPlayer(p.getName().toUpperCase());
@@ -26,7 +26,7 @@ public class Listener implements org.bukkit.event.Listener {
     public void onQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
 
-        if (!p.hasPermission("countactivities"))
+        if (!p.hasPermission("countactivities") && !p.hasPermission("*"))
             return;
 
         PlayerInstance instance = Main.getPlayer(p.getName().toUpperCase());

@@ -1,7 +1,9 @@
 package it.aendrix.activities;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.yaml.snakeyaml.Yaml;
 
@@ -23,6 +25,12 @@ public class Main extends JavaPlugin {
             database();
 
             players = database.selectAllToday();
+
+            for (Player p : Bukkit.getOnlinePlayers())
+                if (players.containsKey(p.getName()))
+                    players.get(p.getName()).start();
+                else
+                    addPlayer(p.getName());
 
             Main.getInstance().getServer().getPluginManager().registerEvents(new Listener(), this);
         } catch (SQLException e) {
@@ -70,7 +78,9 @@ public class Main extends JavaPlugin {
                         user != null ? user : "Activities",
                         table != null ? table : "Activity"
                 );
-            } catch (SQLException | ClassNotFoundException ignored) {}
+            } catch (SQLException | ClassNotFoundException ignored) {
+                ignored.printStackTrace();
+            }
     }
 
     public static Main getInstance() {
